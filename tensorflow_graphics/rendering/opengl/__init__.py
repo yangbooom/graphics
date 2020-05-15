@@ -20,5 +20,14 @@ from tensorflow_graphics.rendering.opengl import math
 # # google internal import 1
 from tensorflow_graphics.util import export_api as _export_api
 
+# pylint: disable=g-import-not-at-top
+try:
+  from tensorflow_graphics.rendering.opengl import gen_rasterizer_op
+except ImportError:
+  import tensorflow as tf
+  gen_rasterizer_op = tf.load_op_library(
+      tf.resource_loader.get_path_to_datafile('rasterizer_op.so'))
+# pylint: enable=g-import-not-at-top
+
 # API contains submodules of tensorflow_graphics.rendering.
 __all__ = _export_api.get_modules()
